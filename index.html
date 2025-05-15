@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>오늘의메뉴 - 방 만들기</title>
+</head>
+<body>
+  <h1>🍱 오늘의메뉴</h1>
+  <button onclick="createRoom()">방 만들기</button>
+
+  <script>
+    function createRoom() {
+      const roomCode = Math.random().toString(36).substring(2, 7).toUpperCase();
+      window.location.href = `room.html?room=${roomCode}`;
+    }
+  </script>
+</body>
+</html>
