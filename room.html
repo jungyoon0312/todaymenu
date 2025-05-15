@@ -1,12 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>오늘의메뉴 - 투표방</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 10px;
       padding: 0;
+      max-width: 450px;
+      margin-left: auto;
+      margin-right: auto;
     }
     button {
       font-size: 1.2rem;
@@ -24,50 +29,75 @@
       margin-bottom: 15px;
       box-sizing: border-box;
     }
-    .container {
-      max-width: 450px;
-      margin: auto;
-    }
   </style>
-  <title>오늘의메뉴 - 메뉴 투표</title>
 </head>
 <body>
-  <div class="container">
-    <h1>🍽️ 메뉴 투표</h1>
-    <p>방 코드: <strong id="roomCode"></strong></p>
+  <h1>🍱 오늘의메뉴 투표방</h1>
+  <div id="roomCode"></div>
 
-    <label for="menuSelect">먹고 싶은 메뉴를 선택하세요:</label>
-    <select id="menuSelect">
-      <option value="" disabled selected>메뉴 선택</option>
-      <option value="김치찌개">김치찌개</option>
-      <option value="된장찌개">된장찌개</option>
-      <option value="치킨">치킨</option>
-      <option value="피자">피자</option>
-      <option value="비빔밥">비빔밥</option>
-    </select>
+  <label for="menuInput">투표할 메뉴 추가:</label>
+  <input type="text" id="menuInput" placeholder="메뉴 이름 입력" />
+  <button id="addMenuBtn">메뉴 추가</button>
 
-    <button onclick="submitVote()">투표하기</button>
+  <h3>메뉴 목록</h3>
+  <ul id="menuList"></ul>
 
-    <p id="message" style="color: green;"></p>
-  </div>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+    import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
 
-  <script>
-    // URL에서 방 코드 가져오기
+    // Firebase 설정 코드
+    const firebaseConfig = {
+      apiKey: "AIzaSyBPcaBUO237yJ4UYtPh9dhR6ZanHMneC_0",
+      authDomain: "todaymenu-9b07b.firebaseapp.com",
+      projectId: "todaymenu-9b07b",
+      storageBucket: "todaymenu-9b07b.firebasestorage.app",
+      messagingSenderId: "244443222506",
+      appId: "1:244443222506:web:e540d4414f4d2d9c1b6293"
+    };
+
+    // Firebase 앱 초기화
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // URL에서 방 코드(room) 읽기
     const urlParams = new URLSearchParams(window.location.search);
-    const roomCode = urlParams.get('room') || '알 수 없음';
-    document.getElementById('roomCode').textContent = roomCode;
+    const roomCode = urlParams.get('room');
 
-    function submitVote() {
-      const menu = document.getElementById('menuSelect').value;
-      const messageEl = document.getElementById('message');
-      if (!menu) {
-        alert('메뉴를 선택해주세요!');
-        return;
-      }
-      // 여기서는 로컬에서 간단히 메시지만 띄움
-      // 나중에 Firebase 같은 실시간 DB 연동 가능
-      messageEl.textContent = `방 [${roomCode}]에 "${menu}" 메뉴를 투표했습니다!`;
+    if (!roomCode) {
+      document.body.innerHTML = '<p>잘못된 방 코드입니다. 다시 방을 만들어 주세요.</p>';
+      throw new Error('No room code');
     }
+
+    // 방 코드 화면에 표시
+    document.getElementById('roomCode').textContent = `방 코드: ${roomCode}`;
+
+    // Firebase DB에 메뉴 저장하는 참조 경로
+    const menusRef = ref(db, `rooms/${roomCode}/menus`);
+
+    // 메뉴 추가 버튼 클릭 이벤트
+    document.getElementById('addMenuBtn').addEventListener('click', () => {
+      const menuName = document.getElementById('menuInput').value.trim();
+      if (menuName) {
+        push(menusRef, {
+          name: menuName,
+          votes: 0
+        });
+        document.getElementById('menuInput').value = '';
+      }
+    });
+
+    // DB에서 메뉴 목록 실시간 업데이트
+    onValue(menusRef, (snapshot) => {
+      const menuList = document.getElementById('menuList');
+      menuList.innerHTML = '';
+      snapshot.forEach((childSnapshot) => {
+        const menu = childSnapshot.val();
+        const li = document.createElement('li');
+        li.textContent = `${menu.name} - 투표 수: ${menu.votes}`;
+        menuList.appendChild(li);
+      });
+    });
   </script>
 </body>
 </html>
