@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>오늘의메뉴 - 메뉴 입력</title>
+</head>
+<body>
+  <h1>🍽️ 오늘의메뉴 - 메뉴 제안</h1>
+  <p id="roomDisplay"></p>
+
+  <input type="text" id="menuInput" placeholder="예: 제육볶음" />
+  <button onclick="submitMenu()">제안하기</button>
+
+  <ul id="menuList"></ul>
+
+  <button onclick="pickRandom()">🎲 낙찰하기</button>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const roomCode = urlParams.get("room");
+    document.getElementById("roomDisplay").innerText = `방 코드: ${roomCode}`;
+
+    const menus = [];
+
+    function submitMenu() {
+      const input = document.getElementById("menuInput");
+      const menu = input.value.trim();
+      if (menu) {
+        menus.push(menu);
+        updateList();
+        input.value = "";
+      }
+    }
+
+    function updateList() {
+      const ul = document.getElementById("menuList");
+      ul.innerHTML = menus.map(item => `<li>${item}</li>`).join("");
+    }
+
+    function pickRandom() {
+      if (menus.length === 0) return alert("메뉴가 없습니다!");
+      const winner = menus[Math.floor(Math.random() * menus.length)];
+      window.location.href = `result.html?menu=${encodeURIComponent(winner)}`;
+    }
+  </script>
+</body>
+</html>
