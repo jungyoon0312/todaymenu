@@ -1,45 +1,72 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>오늘의메뉴 - 메뉴 입력</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 10px;
+      padding: 0;
+    }
+    button {
+      font-size: 1.2rem;
+      padding: 12px 20px;
+      margin: 10px 0;
+      width: 100%;
+      max-width: 400px;
+      box-sizing: border-box;
+    }
+    input, select {
+      font-size: 1rem;
+      padding: 8px;
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+    }
+    .container {
+      max-width: 450px;
+      margin: auto;
+    }
+  </style>
+  <title>오늘의메뉴 - 메뉴 투표</title>
 </head>
 <body>
-  <h1>🍽️ 오늘의메뉴 - 메뉴 제안</h1>
-  <p id="roomDisplay"></p>
+  <div class="container">
+    <h1>🍽️ 메뉴 투표</h1>
+    <p>방 코드: <strong id="roomCode"></strong></p>
 
-  <input type="text" id="menuInput" placeholder="예: 제육볶음" />
-  <button onclick="submitMenu()">제안하기</button>
+    <label for="menuSelect">먹고 싶은 메뉴를 선택하세요:</label>
+    <select id="menuSelect">
+      <option value="" disabled selected>메뉴 선택</option>
+      <option value="김치찌개">김치찌개</option>
+      <option value="된장찌개">된장찌개</option>
+      <option value="치킨">치킨</option>
+      <option value="피자">피자</option>
+      <option value="비빔밥">비빔밥</option>
+    </select>
 
-  <ul id="menuList"></ul>
+    <button onclick="submitVote()">투표하기</button>
 
-  <button onclick="pickRandom()">🎲 낙찰하기</button>
+    <p id="message" style="color: green;"></p>
+  </div>
 
   <script>
+    // URL에서 방 코드 가져오기
     const urlParams = new URLSearchParams(window.location.search);
-    const roomCode = urlParams.get("room");
-    document.getElementById("roomDisplay").innerText = `방 코드: ${roomCode}`;
+    const roomCode = urlParams.get('room') || '알 수 없음';
+    document.getElementById('roomCode').textContent = roomCode;
 
-    const menus = [];
-
-    function submitMenu() {
-      const input = document.getElementById("menuInput");
-      const menu = input.value.trim();
-      if (menu) {
-        menus.push(menu);
-        updateList();
-        input.value = "";
+    function submitVote() {
+      const menu = document.getElementById('menuSelect').value;
+      const messageEl = document.getElementById('message');
+      if (!menu) {
+        alert('메뉴를 선택해주세요!');
+        return;
       }
-    }
-
-    function updateList() {
-      const ul = document.getElementById("menuList");
-      ul.innerHTML = menus.map(item => `<li>${item}</li>`).join("");
-    }
-
-    function pickRandom() {
-      if (menus.length === 0) return alert("메뉴가 없습니다!");
-      const winner = menus[Math.floor(Math.random() * menus.length)];
-      window.location.href = `result.html?menu=${encodeURIComponent(winner)}`;
+      // 여기서는 로컬에서 간단히 메시지만 띄움
+      // 나중에 Firebase 같은 실시간 DB 연동 가능
+      messageEl.textContent = `방 [${roomCode}]에 "${menu}" 메뉴를 투표했습니다!`;
     }
   </script>
 </body>
