@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>오늘의메뉴 - 결과</title>
+</head>
+<body>
+  <h1>🎉 오늘의 메뉴는!</h1>
+  <h2 id="winner"></h2>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const winner = params.get("menu");
+    document.getElementById("winner").innerText = winner || "오류!";
+  </script>
+</body>
+</html>
