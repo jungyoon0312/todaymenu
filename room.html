@@ -12,26 +12,51 @@
       max-width: 450px;
       margin-left: auto;
       margin-right: auto;
+      text-align: center; /* 전체 텍스트 가운데 정렬 */
+    }
+    h1 {
+      text-align: center; /* 제목도 가운데 */
+      margin-bottom: 20px;
     }
     button {
-      font-size: 1.2rem;
-      padding: 12px 20px;
-      margin: 10px 0;
-      width: 100%;
-      max-width: 400px;
+      font-size: 1.3rem;
+      padding: 14px 20px;
+      margin: 10px auto;
+      width: 180px; /* 버튼 너비 고정으로 짧게 */
+      font-weight: 700; /* 두껍게 */
+      color: white;
+      background-color: #e63946; /* 눈에 띄는 빨간색 */
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
       box-sizing: border-box;
+      display: block; /* margin auto 가로 가운데 정렬용 */
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #d62828;
     }
     input, select {
       font-size: 1rem;
       padding: 8px;
-      width: 100%;
-      max-width: 400px;
-      margin-bottom: 15px;
+      width: 280px; /* 입력 박스 짧게 */
+      margin: 0 auto 15px auto;
       box-sizing: border-box;
+      display: block; /* margin auto 가운데 정렬용 */
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
     }
     ul {
       list-style: none;
       padding: 0;
+      max-width: 400px;
+      margin: 20px auto 0 auto;
+      text-align: left; /* 메뉴 목록은 왼쪽 정렬이 보기 좋음 */
     }
     li {
       background: #f0f0f0;
@@ -50,6 +75,8 @@
       border-radius: 4px;
       cursor: pointer;
       font-size: 1rem;
+      flex-shrink: 0;
+      transition: background-color 0.3s ease;
     }
     .vote-btn:hover {
       background-color: #45a049;
@@ -91,10 +118,8 @@
       throw new Error('No room code');
     }
 
-    // 템플릿 리터럴 사용 시 백틱으로 감싸고 ${} 사용해야 합니다.
     document.getElementById('roomCode').textContent = '방 코드: ' + roomCode;
 
-    // 경로 문자열은 작은따옴표나 백틱으로 감싸야 합니다.
     const menusRef = ref(db, `rooms/${roomCode}/menus`);
 
     document.getElementById('addMenuBtn').addEventListener('click', () => {
@@ -111,7 +136,6 @@
     function createMenuElement(menuKey, menu) {
       const li = document.createElement('li');
 
-      // 문자열은 따옴표 또는 백틱으로 감싸고 변수 삽입 시 ${} 사용
       const span = document.createElement('span');
       span.textContent = `${menu.name} - 투표 수: ${menu.votes}`;
 
@@ -121,7 +145,6 @@
 
       voteBtn.onclick = () => {
         const voteRef = ref(db, `rooms/${roomCode}/menus/${menuKey}/votes`);
-        // 트랜잭션으로 안전하게 votes 수 증가
         runTransaction(voteRef, (currentVotes) => {
           return (currentVotes || 0) + 1;
         });
