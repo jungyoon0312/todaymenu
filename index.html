@@ -4,51 +4,74 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>오늘의메뉴 - 방 만들기</title>
-  <meta name="description" content="오늘의메뉴에서 나만의 투표방을 만들어 점심 메뉴를 쉽게 결정하세요!" />
-  <meta name="keywords" content="오늘의메뉴, 메뉴투표, 점심메뉴, 투표방, 맛집추천" />
-  <meta name="author" content="YourName" />
+
+  <!-- 귀여운 구글 폰트 불러오기 -->
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Nanum+Pen+Script&display=swap" rel="stylesheet" />
 
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Comfortaa', cursive, Arial, sans-serif;
       margin: 10px;
       padding: 0;
-      background-color: #fff;
+      background-color: #fff0f6;
+      color: #6a1b4d;
+    }
+
+    h1 {
+      font-family: 'Nanum Pen Script', cursive;
+      font-size: 3rem;
+      margin-bottom: 25px;
+      color: #d81b60;
+      text-align: center;
+      text-shadow: 1px 1px 2px #f8bbd0;
     }
 
     button {
-      font-size: 1.6rem;          /* 글자 크기 키움 */
-      padding: 16px 24px;         /* 패딩 늘림 */
+      font-family: 'Comfortaa', cursive;
+      font-size: 1.6rem;
+      padding: 18px 30px;
       margin: 10px 0;
       width: 100%;
       max-width: 400px;
       box-sizing: border-box;
-
-      background-color: #e53935; /* 빨간색 배경 */
-      color: white;              /* 흰 글씨 */
+      background-color: #f06292;
+      color: white;
       border: none;
-      border-radius: 8px;        /* 둥근 모서리 */
+      border-radius: 30px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 8px rgba(208, 58, 113, 0.4);
     }
 
     button:hover {
-      background-color: #b71c1c; /* 마우스 오버시 더 진한 빨강 */
+      background-color: #ec407a;
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px rgba(236, 64, 122, 0.6);
     }
 
     input, select {
-      font-size: 1rem;
-      padding: 8px;
-      width: 100%;
-      max-width: 400px;
-      margin-bottom: 15px;
+      font-family: 'Comfortaa', cursive;
+      font-size: 1.1rem;
+      padding: 10px 14px;
+      width: 80%;
+      max-width: 350px;
+      margin-bottom: 20px;
       box-sizing: border-box;
+      border: 2px solid #f48fb1;
+      border-radius: 20px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus, select:focus {
+      border-color: #d81b60;
+      box-shadow: 0 0 8px #f48fb1;
     }
 
     .container {
       max-width: 450px;
       margin: auto;
-      text-align: center; /* 모든 텍스트 가운데 정렬 */
+      padding: 20px 10px;
     }
 
     .ad-banner {
@@ -58,19 +81,21 @@
 
     .ad-banner img {
       width: 100%;
-      max-width: 280px;          /* 배너 너비 조금 줄임 */
+      max-width: 280px;
       height: auto;
+      border-radius: 15px;
+      box-shadow: 0 3px 7px rgba(216, 27, 96, 0.3);
     }
   </style>
 </head>
 <body>
  <div class="container">
   <h1>🍱 오늘의메뉴</h1>
-  <button onclick="createRoom()" aria-label="새로운 메뉴 투표방 만들기">방 만들기</button>
+  <button onclick="createRoom()">방 만들기</button>
 
   <!-- 🟡 쿠팡 광고 배너 -->
   <div class="ad-banner">
-    <a href="https://link.coupang.com/a/cu3d6F" target="_blank" referrerpolicy="unsafe-url" rel="nofollow noopener noreferrer">
+    <a href="https://link.coupang.com/a/cu3d6F" target="_blank" referrerpolicy="unsafe-url" rel="noopener noreferrer">
       <img src="https://ads-partners.coupang.com/banners/867806?subId=&traceId=V0-301-969b06e95b87326d-I867806&w=320&h=100" 
            alt="쿠팡 광고 배너">
     </a>
@@ -82,7 +107,6 @@
       window.location.href = `room.html?room=${roomCode}`;
     }
   </script>
-</div>
+ </div>
 </body>
 </html>
-
