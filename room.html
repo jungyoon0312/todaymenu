@@ -5,34 +5,81 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>오늘의메뉴 - 투표방</title>
   <style>
+    /* 베이지톤 배경 + 테두리 + 둥근 모서리 + 은은한 그림자 */
     body {
       font-family: Arial, sans-serif;
-      margin: 10px;
-      padding: 0;
+      margin: 10px auto;
+      padding: 20px;
       max-width: 450px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    button {
-      font-size: 1.2rem;
-      padding: 12px 20px;
-      margin: 10px 0;
-      width: 100%;
-      max-width: 400px;
+      background-color: #f5f0e6; /* 부드러운 베이지 배경 */
+      border: 6px solid #d7cbbd; /* 짙은 베이지 테두리 */
+      border-radius: 12px; /* 모서리 둥글게 */
+      box-shadow: 0 0 15px rgba(215, 203, 189, 0.5); /* 은은한 그림자 */
       box-sizing: border-box;
     }
-    input, select {
+
+    h1 {
+      text-align: center;  
+      margin-bottom: 20px;
+      user-select: none;
+    }
+
+    #roomCode {
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    #menuInput {
       font-size: 1rem;
       padding: 8px;
       width: 100%;
-      max-width: 400px;
+      max-width: 320px;  
       margin-bottom: 15px;
       box-sizing: border-box;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
+
+    #addMenuBtn {
+      font-size: 1.3rem;
+      padding: 14px 30px; 
+      max-width: 180px;
+      width: 100%;
+      background-color: #e53935;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      display: block;
+      margin: 0 auto 25px auto;
+      font-weight: 700;
+      box-sizing: border-box;
+      transition: background-color 0.3s ease;
+    }
+    #addMenuBtn:hover {
+      background-color: #b71c1c;
+    }
+
+    h3 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
     ul {
       list-style: none;
       padding: 0;
+      max-width: 400px;
+      margin: 0 auto;
     }
+
     li {
       background: #f0f0f0;
       margin-bottom: 8px;
@@ -42,17 +89,29 @@
       justify-content: space-between;
       align-items: center;
     }
+
     .vote-btn {
       background-color: #4CAF50;
       color: white;
       border: none;
-      padding: 6px 12px;
-      border-radius: 4px;
+      padding: 8px 18px;
+      border-radius: 6px;
       cursor: pointer;
       font-size: 1rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: background-color 0.3s ease;
     }
+
     .vote-btn:hover {
       background-color: #45a049;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 10px auto;
     }
   </style>
 </head>
@@ -81,65 +140,4 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app, "https://todaymenu-9b07b-default-rtdb.asia-southeast1.firebasedatabase.app");
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const roomCode = urlParams.get('room');
-
-    if (!roomCode) {
-      document.body.innerHTML = '<p>잘못된 방 코드입니다. 다시 방을 만들어 주세요.</p>';
-      throw new Error('No room code');
-    }
-
-    document.getElementById('roomCode').textContent = `방 코드: ${roomCode}`;
-
-    const menusRef = ref(db, `rooms/${roomCode}/menus`);
-
-    document.getElementById('addMenuBtn').addEventListener('click', () => {
-      const menuName = document.getElementById('menuInput').value.trim();
-      if (menuName) {
-        push(menusRef, {
-          name: menuName,
-          votes: 0
-        });
-        document.getElementById('menuInput').value = '';
-      }
-    });
-
-    function createMenuElement(menuKey, menu) {
-      const li = document.createElement('li');
-
-      const span = document.createElement('span');
-      span.textContent = `${menu.name} - 투표 수: ${menu.votes}`;
-
-      const voteBtn = document.createElement('button');
-      voteBtn.textContent = "투표";
-      voteBtn.className = "vote-btn";
-
-      voteBtn.onclick = () => {
-        const voteRef = ref(db, `rooms/${roomCode}/menus/${menuKey}/votes`);
-        // 트랜잭션으로 안전하게 votes 수 증가
-        runTransaction(voteRef, (currentVotes) => {
-          return (currentVotes || 0) + 1;
-        });
-      };
-
-      li.appendChild(span);
-      li.appendChild(voteBtn);
-      return li;
-    }
-
-    onValue(menusRef, (snapshot) => {
-      const menuList = document.getElementById('menuList');
-      menuList.innerHTML = '';
-      snapshot.forEach((childSnapshot) => {
-        const menu = childSnapshot.val();
-        const menuKey = childSnapshot.key;
-        const li = createMenuElement(menuKey, menu);
-        menuList.appendChild(li);
-      });
-    });
-  </script>
-</body>
-</html>
-
+    const db = getDatabase(app, "https://todaymenu-9
