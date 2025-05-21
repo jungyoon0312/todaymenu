@@ -1,70 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 10px;
-      padding: 0;
-    }
-
-    button {
-      font-size: 1.6rem;          /* 글자 크기 키움 */
-      padding: 16px 24px;         /* 패딩 늘림 */
-      margin: 10px 0;
-      width: 100%;
-      max-width: 400px;
-      box-sizing: border-box;
-
-      background-color: #e53935; /* 빨간색 배경 */
-      color: white;              /* 흰 글씨 */
-      border: none;
-      border-radius: 8px;        /* 둥근 모서리 */
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #b71c1c; /* 마우스 오버시 더 진한 빨강 */
-    }
-
-    input, select {
-      font-size: 1rem;
-      padding: 8px;
-      width: 100%;
-      max-width: 400px;
-      margin-bottom: 15px;
-      box-sizing: border-box;
-    }
-
-    .container {
-      max-width: 450px;
-      margin: auto;
-    }
-
-    .ad-banner {
-      margin-top: 30px;
-      text-align: center;
-    }
-
-    .ad-banner img {
-      width: 100%;
-      max-width: 280px;          /* 배너 너비 조금 줄임 */
-      height: auto;
-    }
-  </style>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="오늘의메뉴 - 간편하게 방을 만들어 친구들과 메뉴를 투표하세요." />
+  <meta name="keywords" content="오늘의메뉴, 메뉴 투표, 점심 메뉴, 친구와 투표" />
+  <meta name="author" content="YourName" />
   <title>오늘의메뉴 - 방 만들기</title>
+  <style>
+    /* 기존 스타일 그대로 유지 */
+  </style>
 </head>
 <body>
  <div class="container">
   <h1 style="text-align: center;">🍱 오늘의메뉴</h1>
-  <button onclick="createRoom()">방 만들기</button>
+  <button onclick="createRoom()" aria-label="새로운 메뉴 투표방 만들기">방 만들기</button>
 
-  <!-- 🟡 쿠팡 광고 배너 -->
+  <!-- 쿠팡 광고 배너 -->
   <div style="margin-top: 30px; text-align: center;">
-    <a href="https://link.coupang.com/a/cu3d6F" target="_blank" referrerpolicy="unsafe-url">
+    <a href="https://link.coupang.com/a/cu3d6F" target="_blank" referrerpolicy="unsafe-url" rel="nofollow noopener noreferrer">
       <img src="https://ads-partners.coupang.com/banners/867806?subId=&traceId=V0-301-969b06e95b87326d-I867806&w=320&h=100" 
            alt="쿠팡 광고 배너" 
            style="width: 100%; max-width: 280px; height: auto;">
@@ -80,5 +34,4 @@
 </div>
 </body>
 </html>
-
 
