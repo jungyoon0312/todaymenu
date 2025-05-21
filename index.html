@@ -3,50 +3,67 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-  body {
-    font-family: Arial, sans-serif;
-    margin: 10px;
-    padding: 0;
-  }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 10px;
+      padding: 0;
+    }
 
-  button {
-    font-size: 1.2rem;
-    padding: 12px 20px;
-    margin: 10px 0;
-    width: 100%; /* 버튼 가로 꽉 차게 */
-    max-width: 400px;
-    box-sizing: border-box;
-  }
+    button {
+      font-size: 1.2rem;
+      padding: 12px 20px;
+      margin: 10px 0;
+      width: 100%;
+      max-width: 400px;
+      box-sizing: border-box;
+    }
 
-  input, select {
-    font-size: 1rem;
-    padding: 8px;
-    width: 100%;
-    max-width: 400px;
-    margin-bottom: 15px;
-    box-sizing: border-box;
-  }
+    input, select {
+      font-size: 1rem;
+      padding: 8px;
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+    }
 
-  .container {
-    max-width: 450px;
-    margin: auto;
-  }
-</style>
+    .container {
+      max-width: 450px;
+      margin: auto;
+    }
+
+    .ad-banner {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .ad-banner img {
+      width: 100%;
+      max-width: 400px;
+    }
+  </style>
 
   <title>오늘의메뉴 - 방 만들기</title>
 </head>
 <body>
   <div class="container">
-  <h1>🍱 오늘의메뉴</h1>
-  <button onclick="createRoom()">방 만들기</button>
+    <h1>🍱 오늘의메뉴</h1>
+    <button onclick="createRoom()">방 만들기</button>
 
-  <script>
-    function createRoom() {
-      const roomCode = Math.random().toString(36).substring(2, 7).toUpperCase();
-      window.location.href = `room.html?room=${roomCode}`;
-    }
-  </script>
+    <div class="ad-banner">
+      <a href="https://link.coupang.com/a/cu2142" target="_blank">
+        <img src="https://static.coupangcdn.com/image/banner/2020/banner_default.jpg" alt="쿠팡 광고">
+      </a>
     </div>
+
+    <script>
+      function createRoom() {
+        const roomCode = Math.random().toString(36).substring(2, 7).toUpperCase();
+        window.location.href = `room.html?room=${roomCode}`;
+      }
+    </script>
+  </div>
 </body>
 </html>
+
 
