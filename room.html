@@ -91,9 +91,11 @@
       throw new Error('No room code');
     }
 
-    document.getElementById('roomCode').textContent = 방 코드: ${roomCode};
+    // 템플릿 리터럴 사용 시 백틱으로 감싸고 ${} 사용해야 합니다.
+    document.getElementById('roomCode').textContent = '방 코드: ' + roomCode;
 
-    const menusRef = ref(db, rooms/${roomCode}/menus);
+    // 경로 문자열은 작은따옴표나 백틱으로 감싸야 합니다.
+    const menusRef = ref(db, `rooms/${roomCode}/menus`);
 
     document.getElementById('addMenuBtn').addEventListener('click', () => {
       const menuName = document.getElementById('menuInput').value.trim();
@@ -109,15 +111,16 @@
     function createMenuElement(menuKey, menu) {
       const li = document.createElement('li');
 
+      // 문자열은 따옴표 또는 백틱으로 감싸고 변수 삽입 시 ${} 사용
       const span = document.createElement('span');
-      span.textContent = ${menu.name} - 투표 수: ${menu.votes};
+      span.textContent = `${menu.name} - 투표 수: ${menu.votes}`;
 
       const voteBtn = document.createElement('button');
       voteBtn.textContent = "투표";
       voteBtn.className = "vote-btn";
 
       voteBtn.onclick = () => {
-        const voteRef = ref(db, rooms/${roomCode}/menus/${menuKey}/votes);
+        const voteRef = ref(db, `rooms/${roomCode}/menus/${menuKey}/votes`);
         // 트랜잭션으로 안전하게 votes 수 증가
         runTransaction(voteRef, (currentVotes) => {
           return (currentVotes || 0) + 1;
