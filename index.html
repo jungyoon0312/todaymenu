@@ -46,24 +46,22 @@
   <title>오늘의메뉴 - 방 만들기</title>
 </head>
 <body>
-  <div class="container">
-    <h1>🍱 오늘의메뉴</h1>
-    <button onclick="createRoom()">방 만들기</button>
+ <div class="container">
+  <h1>🍱 오늘의메뉴</h1>
+  <button onclick="createRoom()">방 만들기</button>
 
-    <div class="ad-banner">
-      <a href="https://link.coupang.com/a/cu28OR" target="_blank">
-        <img src="https://static.coupangcdn.com/image/banner/2020/banner_default.jpg" alt="쿠팡 광고">
-      </a>
-    </div>
-
-    <script>
-      function createRoom() {
-        const roomCode = Math.random().toString(36).substring(2, 7).toUpperCase();
-        window.location.href = `room.html?room=${roomCode}`;
-      }
-    </script>
+  <!-- 🟡 쿠팡 광고 배너 -->
+  <div style="margin-top: 30px; text-align: center;">
+    <a href="https://link.coupang.com/a/cu3d6F" target="_blank" referrerpolicy="unsafe-url">
+      <img src="https://ads-partners.coupang.com/banners/867805?subId=&traceId=V0-301-969b06e95b87326d-I867805&w=728&h=90" alt="쿠팡 광고 배너" style="max-width: 100%; height: auto;">
+    </a>
   </div>
-</body>
-</html>
 
+  <script>
+    function createRoom() {
+      const roomCode = Math.random().toString(36).substring(2, 7).toUpperCase();
+      window.location.href = `room.html?room=${roomCode}`;
+    }
+  </script>
+</div>
 
